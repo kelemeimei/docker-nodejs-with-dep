@@ -25,6 +25,18 @@ ADD auth/id_rsa_docker.pub /root/.ssh/id_rsa.pub
 
 RUN chmod 0600 /root/.ssh/*
 
+RUN mkdir -p /root/cache
+
+COPY  configuration/package.json /root/cache/package.json  
+
+COPY  configuration/bower.json /root/cache/bower.json 
+
+WORKDIR /root/cache
+
+RUN npm i
+
+RUN bower i --allow-root
+
 ADD assets /nodeserver
 
 EXPOSE 22
